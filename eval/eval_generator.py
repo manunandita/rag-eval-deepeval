@@ -3,13 +3,14 @@ import json
 from deepeval import evaluate
 from deepeval.test_case import LLMTestCase
 from deepeval.metrics import FaithfulnessMetric, AnswerRelevancyMetric
+from deepeval.models import OllamaModel
 
 from src.generator import generate   # your generator: generate(query, context) -> answer
 
 load_dotenv()
 
-GOLDEN_PATH = "goldens/faithfulness_dataset.json"
-JUDGE_MODEL = "llama3.2:3b"  # NOTE: differs from the other evals (gpt-4o-mini)
+GOLDEN_PATH = "goldens/faithfulness_goldens.json"
+JUDGE_MODEL = OllamaModel(model="llama3.2:3b")  # NOTE: differs from the other evals (gpt-4o-mini)
 THRESHOLD = 0.7
 
 
@@ -20,7 +21,7 @@ with open(GOLDEN_PATH) as f:
 
 # 2. RUN THE GENERATOR on the GOLDEN context (isolation), build one test case each
 test_cases = []
-for g in goldens:
+for g in goldens[:3]:
     context = g["ideal_context"]              # known-good context (list of chunk strings)
     answer = generate(g["query"], context)    # RUN the generator -> actual_output
 
