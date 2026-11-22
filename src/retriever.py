@@ -9,7 +9,7 @@ from langchain_core.documents import Document
 load_dotenv()  # load .env for Ollama API key
 DATA_DIR = "data"
 DB_DIR = "chroma_store"
-EMBED="bge-m3"
+EMBED="all-minilm"
 
 
 # 1. LOAD ---- read each transcript, throw away the VTT timestamps
